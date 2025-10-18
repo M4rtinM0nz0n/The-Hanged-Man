@@ -119,6 +119,7 @@ def displayTitle():
              / / / _ \\/ -_)  / _  / _ `/ _ \\/ _ `/ -_) _  / / /|_/ / _ `/ _ \\
             /_/ /_//_/\\__/  /_//_/\\_,_/_//_/\\_, /\\__/\\_,_/ /_/  /_/\\_,_/_//_/
                                            /___/                             
+                    Por Agustín Russo y Martín Ezequiel Monzón
         """)
 
     # Básicamente ejecuta "cls" específicamente en Windows y, sino, "clear" en cualquier OS basado en Posix
@@ -175,21 +176,29 @@ def play(words):
 
         # Si no hay ningún "_" en la palabra, no queda ninguna por adivinar
         if "_" not in displayWord:
-            print("\nGanaste!")
+            print("\n¡Eso! ¡Ganaste!")
             break
 
         if mistakes >= maxMistakes:
-            print("\nPerdiste. La palabra era:", word)
+            print("\nLástima, Perdiste. La palabra era:", word)
             break
 
 
         guess = input("\nLetra: ").strip().lower()
 
-        # Esta es la condición b ásica de la letra, implica que el input no esté vacío y que su longitud sea 1, si no lo es lanza una alerta.
-        if not guess.isalpha() or len(guess) != 1:
+        # Esta es la condición b ásica de la letra, implica que el input no esté vacío y que su longitud sea 1, si no lo es, pregunta si es igual a la letra, y si no lo es lanza una alerta.
+        if not guess.isalpha() or len(guess) < 1:
             print("Introduce una sola letra válida.")
             sleep(1)
             continue
+
+        if len(guess) != 1:
+            if guess == word:
+                print("Adivinaste la palabra!")
+                break;
+            else: 
+                print("¡Oh no! Palabra equivocada. Perdiste.")
+                break;
 
         # Y obvio que busca después en las letras adivinadas/erróneas si el usuario ya adivinó la susodicha.
         if guess in guessedLetters or guess in wrongLetters:
